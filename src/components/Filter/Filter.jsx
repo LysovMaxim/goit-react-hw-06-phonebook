@@ -1,15 +1,16 @@
 import PropTypes from 'prop-types';
-import {InputFilter} from "./Filter.styled"
+import { InputFilter } from "./Filter.styled"
+import { useSelector } from 'react-redux';
 
-export const Filter = ({ value, onChange }) => {
+export const Filter = ({ onChange }) => {
+    const filterValue = useSelector(state => state.filter);
     return (
           <label>Find contacts by name
-              <InputFilter type="text" value={value} onChange={onChange}/>
+              <InputFilter type="text" value={filterValue} onChange={onChange}/>
         </label>
     )
 } 
 
 Filter.propTypes = {
-    value: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired
 };

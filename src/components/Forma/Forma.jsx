@@ -1,14 +1,16 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Input, FormBtn } from './Forma.styled';
+import { useSelector } from 'react-redux';
 
-export const Forma = ({ arr, onSubmit }) => {
+export const Forma = ({onSubmit }) => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+  const contactsValue = useSelector(state => state.contacts);
 
   const hendleSubmit = event => {
     event.preventDefault();
-    const nameContacts = arr.map(el => el.name.toLowerCase());
+    const nameContacts = contactsValue.map(el => el.name.toLowerCase());
     if (nameContacts.includes(name.toLowerCase())) {
       alert(`${name} is in your contacts`);
     } else {
@@ -64,10 +66,4 @@ export const Forma = ({ arr, onSubmit }) => {
 
 Forma.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-  arr: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
-    })
-  ),
 };
