@@ -1,12 +1,24 @@
 import { useState } from 'react';
-import PropTypes from 'prop-types';
 import { Input, FormBtn } from './Forma.styled';
 import { useSelector } from 'react-redux';
+import { addContact } from 'redux/sliceContact';
+import { nanoid } from 'nanoid';
+import { useDispatch } from 'react-redux';
 
-export const Forma = ({onSubmit }) => {
+export const Forma = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const contactsValue = useSelector(state => state.contacts);
+  const dispatch = useDispatch();
+
+  const addContacts = (name, number) => {
+    const contact = {
+      id: nanoid(),
+      name,
+      number,
+    };
+    dispatch(addContact(contact));
+  };
 
   const hendleSubmit = event => {
     event.preventDefault();
@@ -14,7 +26,7 @@ export const Forma = ({onSubmit }) => {
     if (nameContacts.includes(name.toLowerCase())) {
       alert(`${name} is in your contacts`);
     } else {
-      onSubmit(name, number);
+      addContacts(name, number);
       reset();
     }
   };
@@ -62,8 +74,4 @@ export const Forma = ({onSubmit }) => {
       </form>
     </>
   );
-};
-
-Forma.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
 };
